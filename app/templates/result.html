@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Uploaded</title>
+
+    <style>
+
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:Arial;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .card{
+
+            background:#1e293b;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            width:550px;
+
+        }
+
+        h1{
+
+            margin-bottom:25px;
+
+        }
+
+        p{
+
+            font-size:18px;
+
+            margin:15px 0;
+
+        }
+
+        button{
+
+            margin-top:30px;
+
+            width:100%;
+
+            padding:15px;
+
+            font-size:18px;
+
+            border:none;
+
+            border-radius:10px;
+
+            background:#3b82f6;
+
+            color:white;
+
+            cursor:pointer;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>✅ Upload Successful</h1>
+
+<p><b>Filename:</b> {{ filename }}</p>
+
+<p><b>Resolution:</b> {{ width }} × {{ height }}</p>
+
+<p><b>FPS:</b> {{ fps }}</p>
+
+<p><b>Duration:</b> {{ duration }} seconds</p>
+
+<p><b>Total Frames:</b> {{ frames }}</p>
+
+<p><b>Processed Frames:</b> {{ processed }}</p>
+
+<p><b>Cropped Faces:</b> {{ cropped }}</p>
+
+<form action="/process" method="post">
+
+    <input type="hidden"
+           name="filename"
+           value="{{ filename }}">
+
+    <button type="submit">
+        Start Processing
+    </button>
+
+</form>
+
+</div>
+
+</body>
+</html>
