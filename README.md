@@ -297,9 +297,11 @@ If you'd like to improve LipVision:
 
 ---
 
-# 📄 License
+## 🚧 Project Status
 
-This project is licensed under the MIT License.
+LipVision is currently under active development.
+
+Features, project structure, and APIs may change as development progresses.
 
 ---
 
