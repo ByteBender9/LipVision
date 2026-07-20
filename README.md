@@ -8,13 +8,7 @@
 
 **Kushal Sarkar**
 🎓 Diploma in Computer Science & Engineering
-
-🏫 Techno Polytechnic Durgapur
-
 GitHub: https://github.com/ByteBender9
-
-Repository: https://github.com/ByteBender9/LipVision
-
 </div>
 
 Transform silent lip movements into readable text using Computer Vision and Artificial Intelligence.
@@ -200,25 +194,13 @@ http://127.0.0.1:8000
 
 # 🛠 Technology Stack
 
-## Backend
-
-- FastAPI
-- Python
-
-## Computer Vision
-
-- OpenCV
-
-## AI / Machine Learning
-
-- TensorFlow *(planned)*
-- Deep Learning *(planned)*
-
-## Development Tools
-
-- Git
-- GitHub
-- VS Code
+| Category | Technology |
+|----------|------------|
+| Programming Language | Python |
+| Backend Framework | FastAPI |
+| Computer Vision | OpenCV |
+| Version Control | Git, GitHub |
+| Development Environment | VS Code |
 
 ---
 
@@ -262,9 +244,16 @@ http://127.0.0.1:8000
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-Coming Soon...
+### Home Page
+Coming Soon
+
+### Processing Pipeline
+Coming Soon
+
+### Results Page
+Coming Soon
 
 ---
 
