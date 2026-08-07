@@ -1,105 +1,78 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Video Uploaded</title>
+{% extends "base.html" %}
 
-    <style>
+{% block title %}
+LipVision | Results
+{% endblock %}
 
-        body{
-            background:#0f172a;
-            color:white;
-            font-family:Arial;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-        }
+{% block content %}
 
-        .card{
+<section class="hero">
 
-            background:#1e293b;
+    <div class="container">
 
-            padding:40px;
+        <div class="hero-content">
 
-            border-radius:20px;
+            <span class="badge">
+                🎉 Processing Complete
+            </span>
 
-            width:550px;
+            <h1>
 
-        }
+                Results Dashboard
 
-        h1{
+            </h1>
 
-            margin-bottom:25px;
+            <p>
 
-        }
+                This page will display the final output of the
+                lip-reading pipeline once processing is complete.
 
-        p{
+            </p>
 
-            font-size:18px;
+            <div class="upload-box">
 
-            margin:15px 0;
+                <h3>📹 Video Information</h3>
 
-        }
+                <hr>
 
-        button{
+                <p><strong>Filename:</strong> {{ filename if filename else "N/A" }}</p>
 
-            margin-top:30px;
+                <p><strong>Resolution:</strong> {{ resolution if resolution else "N/A" }}</p>
 
-            width:100%;
+                <p><strong>FPS:</strong> {{ fps if fps else "N/A" }}</p>
 
-            padding:15px;
+                <p><strong>Duration:</strong> {{ duration if duration else "N/A" }}</p>
 
-            font-size:18px;
+            </div>
 
-            border:none;
+            <br>
 
-            border-radius:10px;
+            <div class="upload-box">
 
-            background:#3b82f6;
+                <h3>🤖 AI Prediction</h3>
 
-            color:white;
+                <hr>
 
-            cursor:pointer;
+                <p>
 
-        }
+                    {{ prediction if prediction else "Prediction will appear here after AI inference is implemented." }}
 
-    </style>
+                </p>
 
-</head>
+            </div>
 
-<body>
+            <br>
 
-<div class="card">
+            <a href="/" class="btn-primary">
 
-<h1>✅ Upload Successful</h1>
+                Upload Another Video
 
-<p><b>Filename:</b> {{ filename }}</p>
+            </a>
 
-<p><b>Resolution:</b> {{ width }} × {{ height }}</p>
+        </div>
 
-<p><b>FPS:</b> {{ fps }}</p>
+    </div>
 
-<p><b>Duration:</b> {{ duration }} seconds</p>
+</section>
 
-<p><b>Total Frames:</b> {{ frames }}</p>
-
-<p><b>Processed Frames:</b> {{ processed }}</p>
-
-<p><b>Cropped Faces:</b> {{ cropped }}</p>
-
-<form action="/process" method="post">
-
-    <input type="hidden"
-           name="filename"
-           value="{{ filename }}">
-
-    <button type="submit">
-        Start Processing
-    </button>
-
-</form>
-
-</div>
-
-</body>
-</html>
+{% endblock %}

@@ -1,9 +1,11 @@
 fastapi
 uvicorn
+jinja2
+python-multipart
+
 opencv-python
 mediapipe
 numpy
-pillow
-python-multipart
-jinja2
+Pillow
+
 tqdm

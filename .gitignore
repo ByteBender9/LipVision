@@ -1,25 +1,19 @@
 # Python
+.venv/
+venv/
 __pycache__/
 *.pyc
 
-# Virtual environments
-.venv/
-venv/
+# Generated output
+outputs/
+uploads/
 
 # macOS
 .DS_Store
 
-# VS Code
+# Logs
+*.log
+
+# IDE
 .vscode/
-
-# Uploaded files
-uploads/*
-!uploads/.gitkeep
-
-# Generated outputs
-outputs/*
-!outputs/.gitkeep
-
-# Model files
-models/pretrained/*
-!models/pretrained/.gitkeep
+.idea/

@@ -1,137 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LipVision AI</title>
+{% block title %}
 
-    <style>
+LipVision | AI Powered Lip Reading
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
+{% endblock %}
 
-        body{
 
-            background:#0f172a;
-            color:white;
+{% block content %}
 
-            display:flex;
-            justify-content:center;
-            align-items:center;
+<section class="hero">
 
-            height:100vh;
+    <div class="container">
 
-        }
+        <div class="hero-content">
 
-        .container{
+            <span class="badge">
 
-            width:600px;
+                🚀 AI Powered Visual Speech Recognition
 
-            background:#1e293b;
+            </span>
 
-            padding:40px;
+            <h1>
 
-            border-radius:20px;
+                Turn Silent Videos
+                <br>
+                Into Readable Text
 
-            text-align:center;
+            </h1>
 
-            box-shadow:0 0 25px rgba(0,0,0,.4);
+            <p>
 
-        }
+                LipVision uses Computer Vision and Artificial Intelligence
+                to analyze lip movements from silent videos and convert
+                them into readable text.
 
-        h1{
+            </p>
 
-            font-size:48px;
+            <form
+                action="/upload"
+                method="post"
+                enctype="multipart/form-data"
+                class="upload-form">
 
-            margin-bottom:10px;
+                <label class="upload-box">
 
-        }
+                    <input
+                        type="file"
+                        name="video"
+                        accept=".mp4,.avi,.mov,.mkv"
+                        required>
 
-        p{
+                    <div class="upload-icon">
 
-            color:#cbd5e1;
+                        📤
 
-            margin-bottom:30px;
+                    </div>
 
-        }
+                    <h3>
 
-        input{
+                        Drag & Drop your video
 
-            width:100%;
+                    </h3>
 
-            padding:15px;
+                    <p>
 
-            margin-bottom:25px;
+                        or click to browse
 
-        }
+                    </p>
 
-        button{
+                </label>
 
-            width:100%;
+                <button
+                    type="submit"
+                    class="btn-primary">
 
-            padding:15px;
+                    Upload Video
 
-            font-size:18px;
+                </button>
 
-            border:none;
+            </form>
 
-            border-radius:10px;
+            <div class="supported">
 
-            cursor:pointer;
+                <span>Supported Formats</span>
 
-            background:#3b82f6;
+                <div>
 
-            color:white;
+                    MP4 • AVI • MOV • MKV
 
-            transition:.3s;
+                </div>
 
-        }
+            </div>
 
-        button:hover{
+        </div>
 
-            background:#2563eb;
+    </div>
 
-        }
+</section>
 
-    </style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>👄 LipVision AI</h1>
-
-<p>
-Upload a video and let AI read the speaker's lips.
-</p>
-
-<form action="/upload"
-      method="POST"
-      enctype="multipart/form-data">
-
-<input
-type="file"
-name="video"
-accept="video/*"
-required>
-
-<button>
-
-Upload Video
-
-</button>
-
-</form>
-
-</div>
-
-</body>
-
-</html>
+{% endblock %}

@@ -1,50 +1,89 @@
+from pathlib import Path
+
 import cv2
-import os
+
+from models.detection import DetectionResults
+
+from utils.logger import logger
 
 
 class FaceCropper:
+    """
+    Crops detected faces from extracted frames.
+    """
 
-    def __init__(self):
-        self.detector = cv2.CascadeClassifier(
-            cv2.data.haarcascades +
-            "haarcascade_frontalface_default.xml"
+    def __init__(self, output_directory: Path):
+
+        self.output_directory = Path(output_directory)
+        self.output_directory.mkdir(
+            parents=True,
+            exist_ok=True,
         )
 
-    def crop_faces(self, input_folder, output_folder):
+    def crop(
+        self,
+        detection_results: DetectionResults,
+    ):
 
-        os.makedirs(output_folder, exist_ok=True)
+        logger.info("Starting face cropping...")
 
-        count = 0
+        cropped_faces = []
 
-        for image_name in sorted(os.listdir(input_folder)):
+        for detection in detection_results.detections:
 
-            image_path = os.path.join(input_folder, image_name)
-
-            image = cv2.imread(image_path)
+            image = cv2.imread(
+                str(detection.frame_path)
+            )
 
             if image is None:
                 continue
 
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            box = detection.bounding_box
 
-            faces = self.detector.detectMultiScale(
-                gray,
-                scaleFactor=1.1,
-                minNeighbors=5
-            )
+            face = image[
+                box.y_min:box.y_max,
+                box.x_min:box.x_max,
+            ]
 
-            if len(faces) == 0:
+            if face.size == 0:
                 continue
 
-            x, y, w, h = faces[0]
-
-            face = image[y:y+h, x:x+w]
-
-            cv2.imwrite(
-                os.path.join(output_folder, image_name),
-                face
+            output_path = (
+                self.output_directory
+                / detection.frame_path.name
             )
 
-            count += 1
+            cv2.imwrite(
+                str(output_path),
+                face,
+            )
 
-        return count
+            cropped_faces.append(
+
+                {
+                    "frame_path": detection.frame_path,
+
+                    "face_path": output_path,
+
+                    "bounding_box": box,
+
+                    "landmarks": detection.landmarks,
+
+                }
+
+            )
+
+        logger.info(
+            "Saved %d cropped faces.",
+            len(cropped_faces),
+        )
+
+        return {
+
+            "success": True,
+
+            "count": len(cropped_faces),
+
+            "faces": cropped_faces,
+
+        }

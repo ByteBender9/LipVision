@@ -1,53 +1,128 @@
+from pathlib import Path
+
 import cv2
-import os
+import mediapipe as mp
+
+from models.detection import (
+    BoundingBox,
+    DetectionResults,
+    FaceDetection,
+)
+
+from utils.logger import logger
 
 
 class FaceDetector:
+    """
+    Detects faces and facial landmarks using
+    MediaPipe Face Mesh.
+    """
 
-    def __init__(self):
-        self.detector = cv2.CascadeClassifier(
-            cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    def __init__(
+        self,
+        min_detection_confidence: float = 0.5,
+        min_tracking_confidence: float = 0.5,
+    ):
+
+        self.face_mesh = mp.solutions.face_mesh.FaceMesh(
+            static_image_mode=True,
+            max_num_faces=1,
+            refine_landmarks=True,
+            min_detection_confidence=min_detection_confidence,
+            min_tracking_confidence=min_tracking_confidence,
         )
 
-    def detect_faces(self, input_folder, output_folder):
+    def detect(
+        self,
+        frame_paths: list[Path],
+    ) -> DetectionResults:
 
-        os.makedirs(output_folder, exist_ok=True)
+        logger.info("Starting face detection...")
 
-        total = 0
+        detections: list[FaceDetection] = []
 
-        for image_name in sorted(os.listdir(input_folder)):
+        for frame_path in frame_paths:
 
-            image_path = os.path.join(input_folder, image_name)
-
-            image = cv2.imread(image_path)
+            image = cv2.imread(str(frame_path))
 
             if image is None:
                 continue
 
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            height, width = image.shape[:2]
 
-            faces = self.detector.detectMultiScale(
-                gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(60, 60)
+            rgb = cv2.cvtColor(
+                image,
+                cv2.COLOR_BGR2RGB,
             )
 
-            for (x, y, w, h) in faces:
+            results = self.face_mesh.process(rgb)
 
-                cv2.rectangle(
-                    image,
-                    (x, y),
-                    (x + w, y + h),
-                    (0, 255, 0),
-                    2
+            if not results.multi_face_landmarks:
+                continue
+
+            landmarks = results.multi_face_landmarks[0]
+
+            xs = []
+            ys = []
+
+            for landmark in landmarks.landmark:
+
+                xs.append(
+                    int(landmark.x * width)
                 )
 
-            cv2.imwrite(
-                os.path.join(output_folder, image_name),
-                image
+                ys.append(
+                    int(landmark.y * height)
+                )
+
+            padding = 20
+
+            x_min = max(min(xs) - padding, 0)
+
+            y_min = max(min(ys) - padding, 0)
+
+            x_max = min(max(xs) + padding, width)
+
+            y_max = min(max(ys) + padding, height)
+
+            bbox = BoundingBox(
+                x_min=x_min,
+                y_min=y_min,
+                x_max=x_max,
+                y_max=y_max,
             )
 
-            total += 1
+            detections.append(
 
-        return total
+                FaceDetection(
+
+                    frame_path=frame_path,
+
+                    image_width=width,
+
+                    image_height=height,
+
+                    bounding_box=bbox,
+
+                    landmarks=landmarks,
+
+                )
+
+            )
+
+        logger.info(
+            "Detected %d face(s).",
+            len(detections),
+        )
+
+        return DetectionResults(
+
+            success=True,
+
+            detections=detections,
+
+        )
+
+    def close(self):
+
+        self.face_mesh.close()

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+LipVision | Processing
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="badge">
+
+                ✅ Video Uploaded
+
+            </span>
+
+            <h1>
+
+                Video Metadata
+
+            </h1>
+
+            <p>
+
+                Your video has been uploaded successfully.
+                Below is the extracted metadata.
+
+            </p>
+
+            <div class="upload-box">
+
+                <h3>Video Information</h3>
+
+                <hr>
+
+                <p><strong>Filename:</strong> {{ filename }}</p>
+
+                <p><strong>File Size:</strong> {{ file_size }} MB</p>
+
+                <p><strong>Resolution:</strong> {{ width }} × {{ height }}</p>
+
+                <p><strong>FPS:</strong> {{ fps }}</p>
+
+                <p><strong>Total Frames:</strong> {{ frame_count }}</p>
+
+                <p><strong>Extracted Frames:</strong> {{ extracted_frames }}</p>
+
+                <p><strong>Detected Faces:</strong> {{ detected_faces }}</p>
+
+                <p><strong>Cropped Faces:</strong> {{ cropped_faces }}</p>
+
+                <p><strong>Cropped Mouths:</strong> {{ cropped_mouths }}</p>
+
+                <p><strong>Duration:</strong> {{ duration }} seconds</p>
+
+            </div>
+
+            <br>
+
+            <button class="btn-primary" disabled>
+
+                Frame Extraction
+                (Coming Next)
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
